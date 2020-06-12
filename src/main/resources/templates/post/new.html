@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head(title='TeleTok - Nuevo Post')"></head>
+<body>
+<div class="container container-app">
+    <div th:replace="fragments/header.html :: header"></div>
+    <div class="row justify-content-md-center mt-3">
+        <div class="col col-xs-12 col-md-6">
+            <div class="card">
+                <div class="card-header navbar-light text-center" style="background-color: #e3f2fd;">
+                    Nuevo Post
+                </div>
+                <div class="card-body">
+                    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-danger mt-2" role="alert"></div>
+                    <form th:action="@{/post/save}" th:object="${post}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="description">Descripción</label>
+                            <textarea class="form-control" id="description" name="description" th:field="*{description}"></textarea>
+                            <div class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Foto</label>
+                            <input type="file" class="form-control" id="postFile" name="postFile">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Publicar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/base.html :: jsScripts"></div>
+</body>
+</html>

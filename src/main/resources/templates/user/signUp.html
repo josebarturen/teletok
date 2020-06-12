@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head(title='TeleTok - Registrarse')"></head>
+<body>
+<div class="container">
+    <div class="row justify-content-md-center mt-5">
+        <div class="col col-xs-12 col-md-6">
+            <div class="card">
+                <div class="card-header navbar-light text-center" style="background-color: #e3f2fd;">
+                    <a class="navbar-brand" th:href="@{/}">
+                        <img th:src="@{/img/icon.png}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+                        TeleTok
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/user/save}" th:object="${user}" method="post">
+                        <div class="form-group">
+                            <label for="username">Nombre Completo</label>
+                            <input type="text" class="form-control" id="fullname" name="fullname" th:field="*{fullname}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('fullname')}" th:errors="*{fullname}">Error</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Usuario</label>
+                            <input type="text" class="form-control" id="username" name="username" th:field="*{username}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" id="password" name="password" th:field="*{password}">
+                            <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/base.html :: jsScripts"></div>
+</body>
+</html>

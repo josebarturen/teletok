@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/base.html :: head(title='TeleTok - Bienvenido')"></head>
+<body>
+<div class="container container-app">
+    <div th:replace="fragments/header.html :: header"></div>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success mt-3" role="alert"></div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 card-app">
+        <div class="col mb-4" th:each="post, info : ${postList}">
+            <div class="card">
+                <img th:src="@{|/post/file/${post.mediaUrl}|}" class="card-img-top" style="height: 150px;">
+                <a th:href="@{|/post/${post.id}|}">
+                    <div class="card-img-overlay">
+                        <h6 class="card-title text-white text-center mt-5" style="text-shadow: 2px 2px 4px #000000;">
+                            <i class="fa fa-heart"></i> <span th:text="${post.likes.size()}" /> <i class="fa fa-comment ml-3"></i> <span th:text="${post.comments.size()}" />
+                        </h6>
+                    </div>
+                </a>
+                <div class="card-body">
+                    <p class="card-text card-body-app" th:text="${post.description}"></p>
+                    <p class="card-text"><small class="text-muted" th:text="|@${post.user.username} - Publicado hace ${post.creationDateDiff}|"></small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/base.html :: jsScripts"></div>
+</body>
+</html>

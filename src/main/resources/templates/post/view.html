@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/base.html :: head(title='TeleTok - Ver Post')"></head>
+<body>
+<div class="container container-app">
+    <div th:replace="fragments/header.html :: header"></div>
+    <div th:if="${msg != null}" th:text="${msg}" class="alert alert-success mt-3" role="alert"></div>
+    <div class="row mt-3">
+        <div class="col-sm-12 col-md-6">
+            <img th:src="@{|/post/file/${post.mediaUrl}|}" class="img-fluid">
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-10">
+                            <p class="card-text card-body-app" th:text="${post.description}"></p>
+                            <p class="card-text"><small class="text-muted" th:text="|@${post.user.username} - Publicado hace ${post.creationDateDiff}|"></small></p>
+                        </div>
+                        <div class="col-2 text-right">
+                            <form th:if="${!userLikePost}" th:action="@{/post/like}" method="post">
+                                <input type="hidden" name="postId" id="postId" th:value="${post.id}"/>
+                                <button class="btn btn-link" type="submit"><i class="fa fa-heart-o"></i> <span th:text="${post.likes.size()}" /></button>
+                            </form>
+                            <span th:if="${userLikePost}"><i class="fa fa-heart"></i> <span th:text="${post.likes.size()}" /></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled" >
+                        <li class="media" th:each="c, info : ${post.comments}">
+                            <img th:src="@{/img/avatar.png}" class="mr-3" style="max-width: 30px;">
+                            <div class="media-body">
+                                <h6 class="mt-0 mb-1" th:text="|@${c.user.username}|"></h6>
+                                <p th:text="${c.message}"></p>
+                            </div>
+                        </li>
+                    </ul>
+                    <form sec:authorize="isAuthenticated()" th:action="@{/post/comment}" th:object="${postComment}" method="post">
+                        <input type="hidden" name="postId" id="postId" th:value="${post.id}"/>
+                        <div class="form-group">
+                            <textarea class="form-control" id="message" name="message" th:field="*{message}"></textarea>
+                            <div class="text-danger" th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Error</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Enviar Comentario</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/base.html :: jsScripts"></div>
+</body>
+</html>

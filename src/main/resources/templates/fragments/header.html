@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" th:href="@{/}">
+            <img th:src="@{/img/icon.png}" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            TeleTok
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-app" aria-controls="navbar-app" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar-app">
+            <form class="form-inline" th:action="@{/}" method="get">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar..." name="query" th:value="${session.query}">
+                <button class="btn btn-primary d-none d-sm-block" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-app">
+            <ul sec:authorize="isAnonymous()" class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/signIn}">Ingresar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/user/signUp}">Registrarse</a>
+                </li>
+            </ul>
+            <ul sec:authorize="isAuthenticated()" class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{/post/new}"><i class="fa fa-upload"></i> Nuevo Post</a>
+                </li>
+                <li class="nav-item">
+                    <form th:action="@{/logout}" method="post">
+                        <input class="btn btn-link nav-link" type="submit" th:value="|Cerrar Sesión (${session.user.username})|"/>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+</body>
+</html>
