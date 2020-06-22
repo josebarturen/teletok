@@ -26,6 +26,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(targetEntity=PostComment.class, mappedBy="post",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    @OrderBy("id ASC")
     private List<PostComment> comments = new ArrayList<>();
     @OneToMany(targetEntity=PostLike.class, mappedBy="post",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> likes = new ArrayList<>();

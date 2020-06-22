@@ -35,7 +35,7 @@ import java.util.UUID;
 @Controller
 public class PostController {
 
-    private static String UPLOADED_FOLDER = "/tmp/teletok/";
+    private static String UPLOADED_FOLDER = "/opt/teletok/data/";
 
     @Autowired
     PostRepository postRepository;
